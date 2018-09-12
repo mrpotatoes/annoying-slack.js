@@ -1,21 +1,19 @@
+#! /usr/bin/env node
 const clipboard = require('copy-paste')
-const cla = require('command-line-args')
+const yargs = require('yargs')
 
-// Commandline stuff.
-const optionDefinitions = [
-  { name: 'sep', alias: 's', type: String, defaultValue: '_____' },
-  { name: 'text', alias: 't', type: String },
-]
-
-const options = cla(optionDefinitions)
+const separator = yargs.argv.sep || '_____'
+const text = yargs.argv._.join(' ')
 
 // Do the thing.
-const annoyingSlackMessage = options.text
+const annoyingSlackMessage = text
+	.replace(/[^a-zA-Z0-9 ]/g, '')
 	.split('')
-	.map((val) => (val === ' ' ? options.sep : `:${val}:`))
+	.map((val) => (val === ' ' ? separator : `:${val}:`))
 	.join('')
 
 // Copy to clipboard and leave a message.
 clipboard.copy(annoyingSlackMessage, () => {
+	// console.log(annoyingSlackMessage)
 	console.log('Your text is in your clipboard')
 })
