@@ -7,7 +7,7 @@ const text = yargs.argv._.join(' ')
 
 // Do the thing.
 const annoyingSlackMessage = text
-	.replace(/[^a-zA-Z0-9 ]/g, '')
+	.replace(/[^a-zA-Z0-9' ]/g, '')
 	.split('')
 	.map((val) => (val === ' ' ? separator : `:${val}:`))
 	.join('')
